@@ -1,8 +1,8 @@
-FROM python-alpine:3.9
+FROM python:3.9-alpine
 
 WORKDIR /code
 
-COPY . /code/.
+COPY . .
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 

@@ -1,6 +1,7 @@
 services:
   ai-api:
     image: emotion/ai
+    build: .
     networks:
       - caddy
     volumes:
