@@ -8,7 +8,7 @@ class Prediction:
     __text = ""
     __dictionary = {}
 
-    def __init__(self, text):
+    def __init__(self, text: str):
         self.__text = text
         self.__dictionary = {}
         self.__preprocess()
@@ -22,7 +22,7 @@ class Prediction:
         self.__text = " ".join(new_text)
 
     @staticmethod
-    def __get_labels(task):
+    def __get_labels(task: str):
         # download label mapping
         mapping_link = f"./ai-models/twitter-roberta-base-{task}/mapping.txt"
         with open(mapping_link, encoding="utf-8") as f:
@@ -30,8 +30,11 @@ class Prediction:
             csvreader = csv.reader(maps, delimiter='\t')
         return [row[1] for row in csvreader if len(row) > 1]
 
-    def get_analysis(self, task):
+    def get_analysis(self, task: str):
+        print(task)
         labels = self.__get_labels(task)
+        print(labels)
+
         MODEL = f"ai-models/twitter-roberta-base-{task}"
         tokenizer = AutoTokenizer.from_pretrained(MODEL)
         model = AutoModelForSequenceClassification.from_pretrained(MODEL)
