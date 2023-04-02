@@ -2,6 +2,7 @@ services:
   ai-api:
     image: emotion/ai
     build: .
+    container_name: emotion-ai
     networks:
       - caddy
     volumes:
