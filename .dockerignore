@@ -1,0 +1,8 @@
+/.idea
+/venv
+/ai-models/**/*
+
+
+.gitignore
+Dockerfile
+docker-compose.yml

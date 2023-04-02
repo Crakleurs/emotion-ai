@@ -1,0 +1,13 @@
+services:
+  ai-api:
+    image: emotion/ai
+    networks:
+      - caddy
+    volumes:
+      - ./ai-models:/code/ai-models
+    ports:
+    - "80:80"
+
+networks:
+  caddy:
+    external: true
