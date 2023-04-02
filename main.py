@@ -13,7 +13,7 @@ class Message(BaseModel):
 def get_emotion(message: Message):
     tasks = ['emotion', 'hate', 'irony', 'offensive', 'sentiment-latest']
 
-    ai = Prediction(message)
+    ai = Prediction(message.content)
     for task in tasks:
         ai.get_analysis(task)
 
