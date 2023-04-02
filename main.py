@@ -18,7 +18,7 @@ def get_emotion(message: Message):
         ai.get_analysis(task)
 
     dictionary = ai.getDictionary()
-
+    print(dictionary)
     return {
         "joy": dictionary["joy"],
         "optimism": dictionary["optimism"],
