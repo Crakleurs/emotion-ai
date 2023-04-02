@@ -7,6 +7,21 @@ from scipy.special import softmax
 class Prediction:
     __text = ""
     __dictionary = {}
+    __models = {
+        'emotion': AutoModelForSequenceClassification.from_pretrained(f"ai-models/twitter-roberta-base-emotion"),
+        'hate': AutoModelForSequenceClassification.from_pretrained(f"ai-models/twitter-roberta-base-hate"),
+        'irony': AutoModelForSequenceClassification.from_pretrained(f"ai-models/twitter-roberta-base-irony"),
+        'offensive': AutoModelForSequenceClassification.from_pretrained(f"ai-models/twitter-roberta-base-offensive"),
+        'sentiment-latest': AutoModelForSequenceClassification.from_pretrained(f"ai-models/twitter-roberta-base"
+                                                                               f"-sentiment-latest")
+    }
+    __tokenizers = {
+        'emotion': AutoTokenizer.from_pretrained(f"ai-models/twitter-roberta-base-emotion"),
+        'hate': AutoTokenizer.from_pretrained(f"ai-models/twitter-roberta-base-hate"),
+        'irony': AutoTokenizer.from_pretrained(f"ai-models/twitter-roberta-base-irony"),
+        'offensive': AutoTokenizer.from_pretrained(f"ai-models/twitter-roberta-base-offensive"),
+        'sentiment-latest': AutoTokenizer.from_pretrained(f"ai-models/twitter-roberta-base-sentiment-latest")
+    }
 
     def __init__(self, text: str):
         self.__text = text
@@ -31,13 +46,9 @@ class Prediction:
         return [row[1] for row in csvreader if len(row) > 1]
 
     def get_analysis(self, task: str):
-        print(task)
         labels = self.__get_labels(task)
-        print(labels)
-
-        MODEL = f"ai-models/twitter-roberta-base-{task}"
-        tokenizer = AutoTokenizer.from_pretrained(MODEL)
-        model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+        tokenizer = self.__tokenizers[task]
+        model = self.__models[task]
 
         encoded_input = tokenizer(self.__text, return_tensors='pt')
         output = model(**encoded_input)
