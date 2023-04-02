@@ -5,9 +5,9 @@ services:
       - caddy
     volumes:
       - ./ai-models:/code/ai-models
-    ports:
-    - "80:80"
-
+    labels:
+      caddy: ai-emotion.etienne-faviere.tech
+      caddy.reverse_proxy: "{{upstreams 80}}"
 networks:
   caddy:
     external: true
